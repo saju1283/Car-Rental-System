@@ -21,7 +21,11 @@ Route::name('frontend.')->group(function () {
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
     
     Route::resource('cars', CarController::class)->only(['index', 'show']);
-    
+    // Add this to your routes/web.php
+    Route::get('/rentals/{rental}', [RentalController::class, 'show'])
+        ->name('frontend.rentals.show')
+        ->middleware('auth');
+
     // Protected routes (require authentication)
     Route::middleware('auth')->group(function () {
         Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');

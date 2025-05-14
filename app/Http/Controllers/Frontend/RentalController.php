@@ -139,4 +139,11 @@ class RentalController extends Controller
         
         return back()->with('success', 'Rental canceled successfully!');
     }
+
+    public function show(Rental $rental)
+    {
+        $this->authorize('view', $rental); // Ensure user can view this rental
+        
+        return view('frontend.rentals.show', compact('rental'));
+    }
 }

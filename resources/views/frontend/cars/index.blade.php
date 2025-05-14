@@ -10,6 +10,10 @@
             <div class="card">
                 <div class="card-body">
                     <form method="GET" action="{{ route('frontend.cars.index') }}">
+                        @if(request()->has('page'))
+                            <input type="hidden" name="page" value="{{ request('page') }}">
+                        @endif
+                        
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="brand" class="form-label">Brand</label>
@@ -31,17 +35,17 @@
                             </div>
                             <div class="col-md-3">
                                 <label for="min_price" class="form-label">Min Price</label>
-                                <input type="number" name="min_price" id="min_price" class="form-control" placeholder="$0" value="{{ request('min_price') }}">
+                                <input type="number" name="min_price" id="min_price" class="form-control" placeholder="$0" value="{{ request('min_price') }}" min="0">
                             </div>
                             <div class="col-md-3">
                                 <label for="max_price" class="form-label">Max Price</label>
-                                <input type="number" name="max_price" id="max_price" class="form-control" placeholder="$1000" value="{{ request('max_price') }}">
+                                <input type="number" name="max_price" id="max_price" class="form-control" placeholder="$1000" value="{{ request('max_price') }}" min="0">
                             </div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">Filter</button>
-                                <a href="{{ route('frontend.cars.index') }}" class="btn btn-outline-secondary">Reset</a>
+                                <a href="{{ route('frontend.cars.index') }}" class="btn btn-outline-secondary" onclick="clearFilters()">Reset</a>
                             </div>
                         </div>
                     </form>
@@ -50,17 +54,26 @@
         </div>
     </div>
 
+    @if($errors->any())
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $error)
+                <p>{{ $error }}</p>
+            @endforeach
+        </div>
+    @endif
+
     <div class="row">
         @foreach($cars as $car)
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 @if($car->image)
-                <img src="{{ asset('storage/' . $car->image) }}" class="card-img-top" alt="{{ $car->name }}" style="height: 200px; object-fit: cover;">
+                    <img src="{{ asset('storage/car_images/' . $car->image) }}" class="card-img-top" alt="{{ $car->name }}" style="height: 200px; object-fit: cover;">
                 @else
-                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
-                    No Image Available
-                </div>
+                    <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary text-white" style="height: 200px;">
+                        No Image Available
+                    </div>
                 @endif
+
                 <div class="card-body">
                     <h5 class="card-title">{{ $car->name }}</h5>
                     <p class="card-text">
@@ -83,4 +96,14 @@
         {{ $cars->links() }}
     </div>
 </div>
+
+<script>
+function clearFilters() {
+    document.getElementById('brand').value = '';
+    document.getElementById('car_type').value = '';
+    document.getElementById('min_price').value = '';
+    document.getElementById('max_price').value = '';
+    document.forms[0].submit();
+}
+</script>
 @endsection
