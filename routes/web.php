@@ -35,12 +35,24 @@ Route::name('frontend.')->group(function () {
     });
 });
 
+/*
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('cars', AdminCarController::class);
     Route::resource('rentals', AdminRentalController::class)->except(['create', 'store']);
     Route::resource('customers', CustomerController::class)->only(['index', 'show', 'destroy']);
 });
+*/
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/test-dashboard', [DashboardController::class, 'testDashboard'])->name('test-dashboard');
+
+    Route::resource('cars', AdminCarController::class);
+    Route::resource('rentals', AdminRentalController::class)->except(['create', 'store']);
+    Route::resource('customers', CustomerController::class)->only(['index', 'show', 'destroy','edit', 'update',]);
+});
+
 
 // Home Route
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

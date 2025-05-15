@@ -9,11 +9,20 @@ use Illuminate\Http\Request;
 
 class RentalController extends Controller
 {
+    /*
     public function index()
     {
         $rentals = Rental::with(['user', 'car'])->latest()->get();
         return view('admin.rentals.index', compact('rentals'));
     }
+    */
+    public function index()
+    {
+        $rentals = Rental::with(['user', 'car'])->latest()->paginate(10); // ✅ paginated
+
+        return view('admin.rentals.index', compact('rentals'));
+    }
+
 
     public function show(Rental $rental)
     {

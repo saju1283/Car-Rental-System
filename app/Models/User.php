@@ -21,9 +21,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function isAdmin()
+    public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role === 'admin'; // or $this->is_admin === true if using boolean
     }
 
     public function isCustomer()

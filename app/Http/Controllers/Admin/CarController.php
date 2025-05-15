@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/Admin/CarController.php
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -17,8 +16,12 @@ class CarController extends Controller
     }
 
     public function create()
-    {
-        return view('admin.cars.create');
+    {    
+         return view('admin.cars.create', [
+        'carTypes' => ['SUV', 'Sedan', 'Hatchback', 'Coupe', 'Convertible', 'Wagon']
+    ]);
+    
+        //return view('admin.cars.create');
     }
 
     public function store(Request $request)

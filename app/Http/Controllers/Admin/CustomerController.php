@@ -11,7 +11,7 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = User::where('role', 'customer')->withCount('rentals')->get();
+        $customers = User::where('role', 'customer')->withCount('rentals')->paginate(10);
         return view('admin.customers.index', compact('customers'));
     }
 
@@ -33,5 +33,24 @@ class CustomerController extends Controller
 
         $customer->delete();
         return redirect()->route('admin.customers.index')->with('success', 'Customer deleted successfully!');
+    }
+
+    public function edit(User $customer)
+    {
+        return view('admin.customers.edit', compact('customer'));
+    }
+
+    public function update(Request $request, User $customer)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $customer->id,
+            'phone_number' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        $customer->update($validated);
+
+        return redirect()->route('admin.customers.index')->with('success', 'Customer updated successfully.');
     }
 }

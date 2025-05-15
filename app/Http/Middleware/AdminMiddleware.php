@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Middleware/AdminMiddleware.php
 namespace App\Http\Middleware;
 
 use Closure;
@@ -11,8 +10,11 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::check() || !Auth::user()->isAdmin()) {
-            abort(403, 'Unauthorized access.');
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        
+        if (!$user || !$user->isAdmin()) {
+            abort(403, 'Unauthorized action.');
         }
 
         return $next($request);

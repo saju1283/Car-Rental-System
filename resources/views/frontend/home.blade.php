@@ -2,6 +2,11 @@
 
 @section('title', 'Home')
 @section('content')
+
+<div class="container-fluid p-0">
+    <img src="{{ asset('images/toyota-camy.jpg') }}" class="img-fluid w-100" alt="Car Banner">
+</div>
+
 <div class="container py-4">
     <div class="jumbotron bg-light p-5 rounded-lg m-3">
         <h1 class="display-4">Welcome to Car Rental</h1>

@@ -1,9 +1,9 @@
 @extends('admin.layout')
 
+@section('title', 'Admin Dashboard')
+
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Dashboard</h1>
-</div>
+
 
 <div class="row">
     <div class="col-md-3 mb-4">
@@ -44,37 +44,39 @@
     <div class="card-header">
         <h5>Recent Rentals</h5>
     </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Customer</th>
-                        <th>Car</th>
-                        <th>Dates</th>
-                        <th>Total Cost</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($recentRentals as $rental)
-                    <tr>
-                        <td>{{ $rental->id }}</td>
-                        <td>{{ $rental->user->name }}</td>
-                        <td>{{ $rental->car->name }}</td>
-                        <td>{{ $rental->start_date->format('M d, Y') }} - {{ $rental->end_date->format('M d, Y') }}</td>
-                        <td>${{ number_format($rental->total_cost, 2) }}</td>
-                        <td>
-                            <span class="badge bg-{{ $rental->status === 'completed' ? 'success' : ($rental->status === 'canceled' ? 'danger' : 'warning') }}">
-                                {{ ucfirst($rental->status) }}
-                            </span>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+    <div class="card-body table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Car</th>
+                    <th>Rental Dates</th>
+                    <th>Total Cost</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($recentRentals as $rental)
+                <tr>
+                    <td>{{ $rental->id }}</td>
+                    <td>{{ $rental->user->name }}</td>
+                    <td>{{ $rental->car->brand }} {{ $rental->car->model }}</td>
+                    <td>{{ $rental->start_date->format('M d, Y') }} - {{ $rental->end_date->format('M d, Y') }}</td>
+                    <td>${{ number_format($rental->total_cost, 2) }}</td>
+                    <td>
+                        <span class="badge 
+                            @if($rental->status == 'completed') bg-success
+                            @elseif($rental->status == 'pending') bg-warning
+                            @elseif($rental->status == 'canceled') bg-danger
+                            @endif">
+                            {{ ucfirst($rental->status) }}
+                        </span>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection
