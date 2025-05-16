@@ -2,6 +2,14 @@
 
 @section('title', 'Available Cars')
 @section('content')
+
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+
 <div class="container py-4">
     <h1 class="mb-4">Available Cars</h1>
     
