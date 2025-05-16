@@ -10,6 +10,9 @@ use App\Http\Controllers\Frontend\RentalController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\CustomerMiddleware;
+
 
 // Authentication Routes
 Auth::routes();
@@ -27,7 +30,7 @@ Route::name('frontend.')->group(function () {
         ->middleware('auth');
 
     // Protected routes (require authentication)
-    Route::middleware('auth')->group(function () {
+    Route::middleware('auth', CustomerMiddleware::class)->group(function () {
         Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
         Route::get('/rentals/create/{car}', [RentalController::class, 'create'])->name('rentals.create');
         Route::post('/rentals/{car}', [RentalController::class, 'store'])->name('rentals.store');
@@ -35,16 +38,8 @@ Route::name('frontend.')->group(function () {
     });
 });
 
-/*
-// Admin Routes
-Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('cars', AdminCarController::class);
-    Route::resource('rentals', AdminRentalController::class)->except(['create', 'store']);
-    Route::resource('customers', CustomerController::class)->only(['index', 'show', 'destroy']);
-});
-*/
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+
+Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/test-dashboard', [DashboardController::class, 'testDashboard'])->name('test-dashboard');
 

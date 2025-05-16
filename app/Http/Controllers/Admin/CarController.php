@@ -6,18 +6,31 @@ use App\Http\Controllers\Controller;
 use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class CarController extends Controller
 {
     public function index()
     {
+        /*
+        if (Gate::denies('is-customer')) 
+        {
+            abort(403);
+        }
+        */
         $cars = Car::all();
         return view('admin.cars.index', compact('cars'));
     }
 
     public function create()
     {    
-         return view('admin.cars.create', [
+        /*
+        if (Gate::denies('is-customer')) 
+        {
+            abort(403);
+        }
+        */
+        return view('admin.cars.create', [
         'carTypes' => ['SUV', 'Sedan', 'Hatchback', 'Coupe', 'Convertible', 'Wagon']
     ]);
     
