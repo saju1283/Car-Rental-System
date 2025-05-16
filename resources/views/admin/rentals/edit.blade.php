@@ -42,6 +42,7 @@
                 <option value="ongoing" {{ $rental->status == 'ongoing' ? 'selected' : '' }}>Ongoing</option>
                 <option value="completed" {{ $rental->status == 'completed' ? 'selected' : '' }}>Completed</option>
                 <option value="canceled" {{ $rental->status == 'canceled' ? 'selected' : '' }}>Canceled</option>
+                <option value="pending" {{ $rental->status == 'pending' ? 'selected' : '' }}>Pending</option>
             </select>
         </div>
 

@@ -18,15 +18,16 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Car Details</h5>
+                                        @if($car->image)
+                                            <img src="{{ asset('images/car_images/' . $car->image) }}" alt="{{ $car->name }}" class="img-fluid rounded mb-3">
+                                        @endif
                                         <p class="card-text">
                                             <strong>Brand:</strong> {{ $car->brand }}<br>
                                             <strong>Model:</strong> {{ $car->model }}<br>
                                             <strong>Type:</strong> {{ $car->car_type }}<br>
                                             <strong>Daily Price:</strong> ${{ number_format($car->daily_rent_price, 2) }}
                                         </p>
-                                        @if($car->image)
-                                            <img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->name }}" class="img-fluid rounded mb-3">
-                                        @endif
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -95,4 +96,26 @@
         endDateEl.addEventListener('change', calculateRentalCost);
     });
 </script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const disabledDates = @json($disabledDates ?? []);
+
+        flatpickr("#start_date", {
+            dateFormat: "Y-m-d",
+            disable: disabledDates,
+            minDate: "today"
+        });
+
+        flatpickr("#end_date", {
+            dateFormat: "Y-m-d",
+            disable: disabledDates,
+            minDate: "today"
+        });
+    });
+</script>
+
 @endsection

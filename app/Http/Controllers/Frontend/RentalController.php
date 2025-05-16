@@ -43,8 +43,27 @@ class RentalController extends Controller
 
     public function create(Car $car)
     {
-        return view('frontend.rentals.create', compact('car'));
+        $bookedDates = Rental::where('car_id', $car->id)
+            ->whereIn('status', ['pending', 'ongoing']) 
+            ->get(['start_date', 'end_date']);
+
+        $disabledDates = [];
+
+        foreach ($bookedDates as $rental) {
+            $period = new \DatePeriod(
+                new \DateTime($rental->start_date),
+                new \DateInterval('P1D'),
+                (new \DateTime($rental->end_date))->modify('+1 day') // include end date
+            );
+
+            foreach ($period as $date) {
+                $disabledDates[] = $date->format('Y-m-d');
+            }
+        }
+
+        return view('frontend.rentals.create', compact('car', 'disabledDates'));
     }
+
 
     public function store(Request $request, Car $car)
     {

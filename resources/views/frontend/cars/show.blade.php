@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-6">
             @if($car->image)
-                <img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->name }}" class="img-fluid rounded">
+                <img src="{{ asset('images/car_images/' . $car->image) }}" alt="{{ $car->name }}" class="img-fluid rounded">
             @else
                 <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 300px;">
                     No Image Available
