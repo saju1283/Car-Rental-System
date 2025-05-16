@@ -138,8 +138,10 @@ class RentalController extends Controller
             // Send to admin
             $adminEmail = config('mail.admin_address');
             if ($adminEmail) {
-                Mail::to($adminEmail)
-                    ->send(new AdminRentalNotification($rental));
+                Mail::to($adminEmail)->send(new AdminRentalNotification($rental));
+                Log::info('Rental email sent to admin: ' . $adminEmail);
+            } else {
+                Log::warning('Admin email is empty.');
             }
         } catch (\Exception $e) {
             Log::error('Email sending failed: ' . $e->getMessage());

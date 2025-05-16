@@ -52,16 +52,25 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', AdminMiddleware::cla
 // Home Route
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
 // Test email route (remove in production)
 Route::get('/test-email', function() {
     $rental = App\Models\Rental::first();
     
-    if (!$rental) {
-        $rental = App\Models\Rental::factory()->create();
+    try
+    {
+        if (!$rental) 
+        {
+            $rental = App\Models\Rental::factory()->create();
+        }
+        
+        Mail::to('hosting4bd.seo@gmail.com')->send(new App\Mail\RentalConfirmation($rental));
+        Mail::to('mdsirajul765islam@gmail.com')->send(new App\Mail\AdminRentalNotification($rental));
+        
+        return 'Test emails sent!';
+    } 
+    catch (\Exception $e) 
+    {
+        return 'Email sending failed: ' . $e->getMessage();
     }
-    
-    Mail::to('test@example.com')->send(new App\Mail\RentalConfirmation($rental));
-    Mail::to('admin@example.com')->send(new App\Mail\AdminRentalNotification($rental));
-    
-    return 'Test emails sent!';
 });
