@@ -37,8 +37,12 @@ class CarController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('car_images', 'public');
+        if ($request->hasFile('image')) 
+        {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/car_images'), $imageName);
+            $validated['image'] = $imageName;
         }
 
         Car::create($validated);
@@ -69,12 +73,17 @@ class CarController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($car->image) {
-                Storage::disk('public')->delete($car->image);
+        if ($request->hasFile('image')) 
+        {
+            // Delete old image
+            if ($car->image && file_exists(public_path('images/car_images/' . $car->image))) {
+                unlink(public_path('images/car_images/' . $car->image));
             }
-            $validated['image'] = $request->file('image')->store('car_images', 'public');
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images/car_images'), $imageName);
+            $validated['image'] = $imageName;
         }
 
         $car->update($validated);

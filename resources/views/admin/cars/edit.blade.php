@@ -52,7 +52,7 @@
             <label for="image" class="form-label">Car Image</label>
             <input type="file" name="image" id="image" class="form-control">
             @if($car->image)
-                <img src="{{ asset('storage/car_images/' . $car->image) }}" class="img-thumbnail mt-2" width="150">
+                <img src="{{ asset('images/car_images/' . $car->image) }}" class="img-thumbnail mt-2" width="150">
             @endif
         </div>
 

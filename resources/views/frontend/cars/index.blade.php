@@ -67,7 +67,7 @@
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 @if($car->image)
-                    <img src="{{ asset('images/' . $car->image) }}" class="card-img-top" alt="{{ $car->name }}" style="height: 200px; object-fit: cover;">
+                    <img src="{{ asset('images/car_images/' . $car->image) }}" class="card-img-top" alt="{{ $car->name }}" style="height: 200px; object-fit: cover;">
                 @else
                     <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary text-white" style="height: 200px;">
                         No Image Available
