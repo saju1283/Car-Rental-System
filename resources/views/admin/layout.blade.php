@@ -10,6 +10,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid d-flex justify-content-between align-items-center px-3">
+
+        <!-- Left-aligned brand -->
+        <span class="navbar-brand mb-0 h1" style="margin-left: 10px;">Car Rental</span>
+
+        <!-- Right-aligned authenticated user -->
+        <div class="dropdown ms-auto" style="margin-right: 20px;">
+            <a class="nav-link text-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ Auth::user()->name }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Logout</a></li>
+            </ul>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </div>
+    </div>
+</nav>
+
     <div class="container-fluid">
         <div class="row">
             <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
