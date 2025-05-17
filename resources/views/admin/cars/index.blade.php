@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Manage Cars</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.cars.create') }}" class="btn btn-sm btn-outline-primary">
+        <a href="{{ route('admin.cars.create') }}" class="btn btn-primary">
             <i class="fas fa-plus"></i> Add New Car
         </a>
     </div>
@@ -25,7 +25,8 @@
                 <th>Name</th>
                 <th>Brand</th>
                 <th>Model</th>
-                <th>Type</th>
+                <th>Year</th>
+                <th>Type</th>     
                 <th>Daily Price</th>
                 <th>Availability</th>
                 <th>Actions</th>
@@ -45,6 +46,7 @@
                 <td>{{ $car->name }}</td>
                 <td>{{ $car->brand }}</td>
                 <td>{{ $car->model }}</td>
+                <td>{{ $car->year }}</td>
                 <td>{{ $car->car_type }}</td>
                 <td>${{ number_format($car->daily_rent_price, 2) }}</td>
                 <td>

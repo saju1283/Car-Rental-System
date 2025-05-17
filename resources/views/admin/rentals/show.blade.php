@@ -12,7 +12,8 @@
         </div>
         <div class="card-body">
             <p><strong>Customer:</strong> {{ $rental->user->name }}</p>
-            <p><strong>Car:</strong> {{ $rental->car->brand }} {{ $rental->car->model }}</p>
+            <p><strong>Contact Number:</strong> {{ $rental->user->phone_number }}</p>
+            <p><strong>Car:</strong> {{ $rental->car->name }} ({{ $rental->car->brand }})</p>
             <p><strong>Rental Dates:</strong> {{ $rental->start_date->format('M d, Y') }} - {{ $rental->end_date->format('M d, Y') }}</p>
             <p><strong>Total Cost:</strong> ${{ number_format($rental->total_cost, 2) }}</p>
             <p>
@@ -21,6 +22,7 @@
                     @if($rental->status == 'completed') bg-success
                     @elseif($rental->status == 'pending') bg-warning
                     @elseif($rental->status == 'canceled') bg-danger
+                     @elseif($rental->status == 'ongoing') bg-dark
                     @endif">
                     {{ ucfirst($rental->status) }}
                 </span>

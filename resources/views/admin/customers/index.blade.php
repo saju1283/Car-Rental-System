@@ -3,6 +3,13 @@
 @section('title', 'Manage Customers')
 
 @section('content')
+
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
 <div class="container mt-4">
     <h2>Customer Management</h2>
 
@@ -25,7 +32,7 @@
                     <td>{{ $customer->id }}</td>
                     <td>{{ $customer->name }}</td>
                     <td>{{ $customer->email }}</td>
-                    <td>{{ $customer->phone }}</td>
+                    <td>{{ $customer->phone_number }}</td>
                     <td>{{ $customer->address }}</td>
                     <td>{{ $customer->rentals_count }}</td>
                     <td>

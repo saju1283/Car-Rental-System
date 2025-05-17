@@ -69,6 +69,7 @@
                             @if($rental->status == 'completed') bg-success
                             @elseif($rental->status == 'pending') bg-warning
                             @elseif($rental->status == 'canceled') bg-danger
+                            @elseif($rental->status == 'ongoing') bg-dark
                             @endif">
                             {{ ucfirst($rental->status) }}
                         </span>

@@ -3,6 +3,13 @@
 @section('title', 'Manage Rentals')
 
 @section('content')
+
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
 <div class="container mt-4">
     <h2>Rental Management</h2>
 
@@ -24,14 +31,14 @@
                 <tr>
                     <td>{{ $rental->id }}</td>
                     <td>{{ $rental->user->name }}</td>
-                    <td>{{ $rental->car->brand }} {{ $rental->car->model }}</td>
+                    <td>{{ $rental->car->name }} ({{ $rental->car->brand }})</td>
                     <td>{{ $rental->start_date->format('M d, Y') }} - {{ $rental->end_date->format('M d, Y') }}</td>
                     <td>${{ number_format($rental->total_cost, 2) }}</td>
                     <td>
                         <span class="badge 
                             @if($rental->status == 'completed') bg-success
                             @elseif($rental->status == 'pending') bg-warning
-                            @elseif($rental->status == 'Ongoing') bg-danger
+                            @elseif($rental->status == 'ongoing') bg-dark
                             @elseif($rental->status == 'canceled') bg-danger
                             @endif">
                             {{ ucfirst($rental->status) }}
